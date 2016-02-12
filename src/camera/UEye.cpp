@@ -46,7 +46,7 @@ void UEye::captureColor(cv::Mat& buffer) {
     // Wait for up to 10 sec to capture next frame.
     const char* data = _driver->processNextFrame(10000);
     std::memcpy(buffer.data, data,
-                3 * sizeof (uchar) * _size.width * _size.height);
+                sizeof (uchar) * _size.width * _size.height);
 }
 
 }

@@ -177,7 +177,7 @@ INT UEyeCamDriver::loadCamConfig(string filename) {
                     << cam_name_ << "' (" << err2str(is_err) << ")" << std::endl;
             return is_err;
         }
-        INT colorMode = is_SetColorMode(cam_handle_, IS_GET_COLOR_MODE);
+        INT colorMode = IS_CM_MONO8; //is_SetColorMode(cam_handle_, IS_GET_COLOR_MODE); //TODO: ERIK CHANGED THIS THING
         if (colorMode == IS_CM_BGR8_PACKED || colorMode == IS_CM_RGB8_PACKED) {
             bits_per_pixel_ = 24;
         } else if (colorMode == IS_CM_MONO8 || colorMode == IS_CM_SENSOR_RAW8) {
@@ -210,7 +210,7 @@ INT UEyeCamDriver::setColorMode(string mode, bool reallocate_buffer) {
     setStandbyMode();
 
     // Set to specified color mode
-    if (mode == "rgb8") {
+    /*if (mode == "rgb8") {
         if ((is_err = is_SetColorMode(cam_handle_, IS_CM_RGB8_PACKED)) != IS_SUCCESS) {
             std::cerr << "Could not set color mode to RGB8 (" << err2str(is_err)
                       << ")" << std::endl;
@@ -224,14 +224,14 @@ INT UEyeCamDriver::setColorMode(string mode, bool reallocate_buffer) {
             return is_err;
         }
         bits_per_pixel_ = 8;
-    } else { // Default to MONO8
+    } else { // Default to MONO8 */ //TODO: Erik changed this
         if ((is_err = is_SetColorMode(cam_handle_, IS_CM_MONO8)) != IS_SUCCESS) {
             std::cerr << "Could not set color mode to MONO8 ("
                       << err2str(is_err) << ")" << std::endl;
             return is_err;
         }
         bits_per_pixel_ = 8;
-    }
+    //} //TODO: erik changed this
 
     std::cout << "Updated color mode to " << mode << std::endl;
 

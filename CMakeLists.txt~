@@ -33,7 +33,7 @@ SET(SOVERSION "0.9")
 
 SET(SRC
   src/camera/ColorCamera.cpp src/camera/DepthCamera.cpp
-   src/camera/UVCamera.cpp
+  src/camera/StereoCamera.cpp src/camera/UVCamera.cpp
   src/camera/DistortionCalibrator.cpp src/camera/DepthCalibrator.cpp
   src/camera/ColorCalibrator.cpp src/camera/ColorRotator.cpp src/camera/DepthRotator.cpp)
 
@@ -59,9 +59,9 @@ SET(LIB
 ADD_EXECUTABLE(UVCameraCapture samples/UVCameraCapture.cpp)
 ADD_DEPENDENCIES(UVCameraCapture ${SRC})
 TARGET_LINK_LIBRARIES(UVCameraCapture ${LIB})
-
-
-
+ADD_EXECUTABLE(StereoCameraCalibration samples/StereoCameraCalibration.cpp)
+ADD_DEPENDENCIES(StereoCameraCalibration ${SRC})
+TARGET_LINK_LIBRARIES(StereoCameraCalibration ${LIB})
 INSTALL(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION lib)
 INSTALL(DIRECTORY include/rgbd DESTINATION include)
 
@@ -106,11 +106,11 @@ IF(USE_UEYE)
   ADD_EXECUTABLE(UEyeCalibration samples/UEyeCalibration.cpp)
   ADD_DEPENDENCIES(UEyeCalibration ${SRC} ${SRC_UEYE})
   TARGET_LINK_LIBRARIES(UEyeCalibration ${LIB} ${PROJECT_NAME}-ueye ueye_api)
-
-
-
-
-
-
+  ADD_EXECUTABLE(StereoUEyeCapture samples/StereoUEyeCapture.cpp)
+  ADD_DEPENDENCIES(StereoUEyeCapture ${SRC} ${SRC_UEYE})
+  TARGET_LINK_LIBRARIES(StereoUEyeCapture ${LIB} ${PROJECT_NAME}-ueye ueye_api)
+  ADD_EXECUTABLE(StereoUEyeGetCalibrationData samples/StereoUEyeGetCalibrationData.cpp)
+  ADD_DEPENDENCIES(StereoUEyeGetCalibrationData ${SRC} ${SRC_UEYE})
+  TARGET_LINK_LIBRARIES(StereoUEyeGetCalibrationData ${LIB} ${PROJECT_NAME}-ueye ueye_api)
   INSTALL(TARGETS ${PROJECT_NAME}-ueye LIBRARY DESTINATION lib)
 ENDIF()
